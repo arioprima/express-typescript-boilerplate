@@ -1,0 +1,23 @@
+model Outlet {
+    id             String    @id @default(uuid())
+    tenant_id      String
+    name           String
+    address        String?
+    latitude       Decimal?
+    longitude      Decimal?
+    radius_meters  Int       @default(100)
+    wifi_ssid      String?
+    wifi_bssid     String?
+    qr_code_secret String?
+    timezone       String    @default("Asia/Jakarta")
+    is_active      Boolean   @default(true)
+    created_at     DateTime  @default(now())
+    updated_at     DateTime  @updatedAt
+    deleted_at     DateTime?
+
+    tenant Tenant @relation(fields: [tenant_id], references: [id], onDelete: Cascade)
+
+    @@index([tenant_id])
+    @@index([latitude, longitude])
+    @@map("outlets")
+}
