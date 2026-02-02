@@ -1,0 +1,13 @@
+# Paksa semua file teks menggunakan LF (Gaya Linux/Mac)
+# Ini standar internasional coding. Windows akan otomatis menyesuaikan saat checkout.
+* text=auto eol=lf
+
+# File biner jangan diotak-atik
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.mov binary
+*.mp4 binary
+*.pdf binary

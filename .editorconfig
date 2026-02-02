@@ -1,0 +1,13 @@
+# EditorConfig is awesome: https://EditorConfig.org
+
+# Top-most EditorConfig file
+root = true
+
+# Unix-style newlines with a newline ending every file
+[*]
+charset = utf-8
+indent_style = space
+indent_size = 2    # Sesuai selera anda (biasanya 2 atau 4)
+end_of_line = lf   # INI KUNCINYA (Paksa LF)
+insert_final_newline = true
+trim_trailing_whitespace = true
