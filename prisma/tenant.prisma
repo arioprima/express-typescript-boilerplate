@@ -12,6 +12,7 @@ model Tenant {
     deleted_at              DateTime?
     outlets                 Outlet[]
     users                   User[]
+    shifts                  Shift[]
 
     @@index([slug])
     @@index([is_active])
