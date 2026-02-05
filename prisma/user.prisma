@@ -18,4 +18,13 @@ model User {
     created_at         DateTime  @default(now())
     updated_at         DateTime  @updatedAt
     deleted_at         DateTime?
+
+    tenant Tenant @relation(fields: [tenant_id], references: [id], onDelete: Cascade)
+    role   Role   @relation(fields: [role_id], references: [id], onDelete: Restrict)
+
+    @@index([tenant_id])
+    @@index([email])
+    @@index([phone])
+    @@index([employee_code])
+    @@map("users")
 }
