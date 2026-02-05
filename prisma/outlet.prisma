@@ -3,8 +3,8 @@ model Outlet {
     tenant_id      String
     name           String
     address        String?
-    latitude       Decimal?
-    longitude      Decimal?
+    latitude       Decimal?  @db.Decimal(10, 8)
+    longitude      Decimal?  @db.Decimal(11, 8)
     radius_meters  Int       @default(100)
     wifi_ssid      String?
     wifi_bssid     String?
