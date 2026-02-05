@@ -15,6 +15,7 @@ model Outlet {
     updated_at     DateTime     @updatedAt
     deleted_at     DateTime?
     userOutlets    UserOutlet[]
+    schedules      Schedule[]
 
     tenant Tenant @relation(fields: [tenant_id], references: [id], onDelete: Cascade)
 

@@ -1,16 +1,17 @@
 model Shift {
-    id                     String    @id @default(uuid())
+    id                     String     @id @default(uuid())
     tenant_id              String
     name                   String
     color                  String?
     start_Time             DateTime
     end_time               DateTime
-    break_duration_minutes Int       @default(60)
-    is_overnight           Boolean   @default(false)
-    is_active              Boolean   @default(true)
-    created_at             DateTime  @default(now())
-    updated_at             DateTime  @updatedAt
+    break_duration_minutes Int        @default(60)
+    is_overnight           Boolean    @default(false)
+    is_active              Boolean    @default(true)
+    created_at             DateTime   @default(now())
+    updated_at             DateTime   @updatedAt
     deleted_at             DateTime?
+    schedules              Schedule[]
 
     tenant Tenant @relation(fields: [tenant_id], references: [id], onDelete: Cascade)
 
