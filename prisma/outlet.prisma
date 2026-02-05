@@ -1,19 +1,20 @@
 model Outlet {
-    id             String    @id @default(uuid())
+    id             String       @id @default(uuid())
     tenant_id      String
     name           String
     address        String?
-    latitude       Decimal?  @db.Decimal(10, 8)
-    longitude      Decimal?  @db.Decimal(11, 8)
-    radius_meters  Int       @default(100)
+    latitude       Decimal?     @db.Decimal(10, 8)
+    longitude      Decimal?     @db.Decimal(11, 8)
+    radius_meters  Int          @default(100)
     wifi_ssid      String?
     wifi_bssid     String?
     qr_code_secret String?
-    timezone       String    @default("Asia/Jakarta")
-    is_active      Boolean   @default(true)
-    created_at     DateTime  @default(now())
-    updated_at     DateTime  @updatedAt
+    timezone       String       @default("Asia/Jakarta")
+    is_active      Boolean      @default(true)
+    created_at     DateTime     @default(now())
+    updated_at     DateTime     @updatedAt
     deleted_at     DateTime?
+    userOutlets    UserOutlet[]
 
     tenant Tenant @relation(fields: [tenant_id], references: [id], onDelete: Cascade)
 
