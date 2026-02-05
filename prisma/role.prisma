@@ -1,0 +1,11 @@
+model Role {
+    id           String    @id @default(uuid())
+    name         String    @unique
+    display_name String
+    permissions  Json?
+    created_at   DateTime  @default(now())
+    updated_at   DateTime  @updatedAt
+    deleted_at   DateTime?
+
+    @@map("roles")
+}
