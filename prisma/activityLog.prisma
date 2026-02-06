@@ -1,0 +1,24 @@
+model ActivityLog {
+    id          String    @id @default(uuid())
+    tenant_id   String?
+    user_id     String?
+    action      String
+    entity_type String?
+    entity_id   String?
+    old_values  Json?
+    new_values  Json?
+    ip_address  String?
+    user_agent  String?
+    created_at  DateTime  @default(now())
+    updated_at  DateTime  @updatedAt
+    deleted_at  DateTime?
+
+    tenant Tenant? @relation(fields: [tenant_id], references: [id], onDelete: Cascade)
+    user   User?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+    @@index([tenant_id])
+    @@index([user_id])
+    @@index([action])
+    @@index([created_at])
+    @@map("activity_logs")
+}
