@@ -14,12 +14,14 @@ model Schedule {
     updated_at   DateTime  @updatedAt
     deleted_at   DateTime?
 
-    tenant          Tenant       @relation(fields: [tenant_id], references: [id], onDelete: Cascade)
-    outlet          Outlet       @relation(fields: [outlet_id], references: [id], onDelete: Cascade)
-    user            User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
-    shift           Shift        @relation(fields: [shift_id], references: [id], onDelete: Cascade)
-    created_by_user User?        @relation("ScheduleCreatedByUser", fields: [created_by], references: [id], onDelete: SetNull)
-    attendances     Attendance[]
+    tenant                          Tenant        @relation(fields: [tenant_id], references: [id], onDelete: Cascade)
+    outlet                          Outlet        @relation(fields: [outlet_id], references: [id], onDelete: Cascade)
+    user                            User          @relation(fields: [user_id], references: [id], onDelete: Cascade)
+    shift                           Shift         @relation(fields: [shift_id], references: [id], onDelete: Cascade)
+    created_by_user                 User?         @relation("ScheduleCreatedByUser", fields: [created_by], references: [id], onDelete: SetNull)
+    attendances                     Attendance[]
+    swap_request_requester_schedule SwapRequest[] @relation("SwapRequestRequesterSchedule")
+    swap_request_target_schedule    SwapRequest[] @relation("SwapRequestTargetSchedule")
 
     @@index([tenant_id])
     @@index([outlet_id])

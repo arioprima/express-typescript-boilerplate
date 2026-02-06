@@ -1,20 +1,21 @@
 model Tenant {
-    id                      String       @id @default(uuid())
+    id                      String        @id @default(uuid())
     name                    String
-    slug                    String       @unique
+    slug                    String        @unique
     industry                String?
     logo_url                String?
-    subscription_plan       String       @default("starter")
+    subscription_plan       String        @default("starter")
     subscription_expires_at DateTime?
-    is_active               Boolean      @default(true)
-    created_at              DateTime     @default(now())
-    updated_at              DateTime     @updatedAt
+    is_active               Boolean       @default(true)
+    created_at              DateTime      @default(now())
+    updated_at              DateTime      @updatedAt
     deleted_at              DateTime?
     outlets                 Outlet[]
     users                   User[]
     shifts                  Shift[]
     schedules               Schedule[]
     attendances             Attendance[]
+    swap_requests           SwapRequest[]
 
     @@index([slug])
     @@index([is_active])
