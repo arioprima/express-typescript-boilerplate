@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { ZodError } from 'zod';
 import { AppError } from '../utils/AppError';
 
 export function errorHandler(
@@ -7,28 +8,39 @@ export function errorHandler(
   res: Response,
   _next: NextFunction
 ) {
-  // Default values
-  let statusCode = 500;
-  let message = 'Internal Server Error';
-  let stack: string | undefined = undefined;
+  // --- 1. Zod Validation Error ---
+  if (err instanceof ZodError) {
+    const errors = err.issues.map((issue) => ({
+      field: issue.path
+        .map(String)
+        .filter((p) => p !== 'body' && p !== 'params' && p !== 'query')
+        .join('.'),
+      message: issue.message,
+    }));
 
+    res.status(400).json({
+      success: false,
+      message: 'Validasi gagal',
+      errors,
+    });
+    return;
+  }
+
+  // --- 2. AppError (error yang kita throw sendiri) ---
   if (err instanceof AppError) {
-    // Error yang kita throw sendiri (expected)
-    statusCode = err.statusCode;
-    message = err.message;
-  } else {
-    // Error tidak terduga (bug)
-    console.error('❌ Unexpected Error:', err);
+    res.status(err.statusCode).json({
+      success: false,
+      message: err.message,
+    });
+    return;
   }
 
-  // Tampilkan stack trace hanya di development
-  if (process.env['NODE_ENV'] === 'development') {
-    stack = err.stack;
-  }
+  // --- 3. Error tidak terduga (bug) ---
+  console.error('❌ Unexpected Error:', err);
 
-  res.status(statusCode).json({
+  res.status(500).json({
     success: false,
-    message,
-    ...(stack && { stack }),
+    message: 'Internal Server Error',
+    ...(process.env['NODE_ENV'] === 'development' && { stack: err.stack }),
   });
 }

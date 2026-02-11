@@ -1,8 +1,10 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
+import { z } from 'zod';
 import { notFoundHandler } from './middlewares/notFoundHandler';
 import { errorHandler } from './middlewares/errorHandler';
+import { validate } from './middlewares/validate';
 
 const app = express();
 const port = process.env['PORT'] || 3000;
@@ -16,6 +18,21 @@ app.use(cors());
 app.get('/', (_, res) => {
   res.json({ success: true, message: 'ShiftKu API is running 🚀' });
 });
+
+// ==========================================
+// TEST ROUTE — hapus nanti setelah paham
+// ==========================================
+const testSchema = z.object({
+  body: z.object({
+    email: z.email('Email tidak valid'),
+    password: z.string().min(8, 'Password minimal 8 karakter'),
+    full_name: z.string().min(1, 'Nama wajib diisi'),
+  }),
+});
+app.post('/test-validate', validate(testSchema), (req, res) => {
+  res.json({ success: true, data: req.body });
+});
+// ==========================================
 
 // TODO: Tambahkan routes di sini
 // app.use('/api/v1/auth', authRoutes);
