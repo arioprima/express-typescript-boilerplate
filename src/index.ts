@@ -3,11 +3,11 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import { z } from 'zod';
-import logger from './config/logger';
-import { requestLogger } from './middlewares/requestLogger';
-import { notFoundHandler } from './middlewares/notFoundHandler';
-import { errorHandler } from './middlewares/errorHandler';
-import { validate } from './middlewares/validate';
+import logger from '@/config/logger';
+import { requestLogger } from '@/middlewares/requestLogger';
+import { notFoundHandler } from '@/middlewares/notFoundHandler';
+import { errorHandler } from '@/middlewares/errorHandler';
+import { validate } from '@/middlewares/validate';
 
 const app = express();
 const port = process.env['PORT'] || 3000;
