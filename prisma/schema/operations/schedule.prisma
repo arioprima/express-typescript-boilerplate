@@ -4,7 +4,7 @@ model Schedule {
     outlet_id    String
     user_id      String
     shift_id     String
-    date         DateTime
+    date         DateTime  @db.Date
     notes        String?
     status       String    @default("scheduled")
     published    Boolean   @default(false)
