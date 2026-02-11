@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { ZodError } from 'zod';
 import { AppError } from '../utils/AppError';
+import logger from '../config/logger';
 
 export function errorHandler(
   err: Error,
@@ -36,7 +37,7 @@ export function errorHandler(
   }
 
   // --- 3. Error tidak terduga (bug) ---
-  console.error('❌ Unexpected Error:', err);
+  logger.error({ err }, 'Unexpected Error');
 
   res.status(500).json({
     success: false,

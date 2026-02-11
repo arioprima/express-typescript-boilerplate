@@ -1,7 +1,10 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
 import { z } from 'zod';
+import logger from './config/logger';
+import { requestLogger } from './middlewares/requestLogger';
 import { notFoundHandler } from './middlewares/notFoundHandler';
 import { errorHandler } from './middlewares/errorHandler';
 import { validate } from './middlewares/validate';
@@ -9,10 +12,25 @@ import { validate } from './middlewares/validate';
 const app = express();
 const port = process.env['PORT'] || 3000;
 
+// --- Security Headers (helmet) ---
+app.use(helmet());
+
+// --- CORS ---
+app.use(
+  cors({
+    origin: process.env['CORS_ORIGIN'] || '*',
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+  })
+);
+
 // --- Body Parsers ---
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+
+// --- Request Logger (log setiap HTTP request) ---
+app.use(requestLogger);
 
 // --- Routes ---
 app.get('/', (_, res) => {
@@ -43,6 +61,6 @@ app.use(errorHandler);
 
 // --- Start Server ---
 app.listen(port, () => {
-  console.log(`🚀 Server is running at http://localhost:${port}`);
-  console.log(`📦 Environment: ${process.env['NODE_ENV'] || 'development'}`);
+  logger.info(`🚀 Server is running at http://localhost:${port}`);
+  logger.info(`📦 Environment: ${process.env['NODE_ENV'] || 'development'}`);
 });
