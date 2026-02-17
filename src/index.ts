@@ -8,6 +8,7 @@ import { requestLogger } from '@/middlewares/requestLogger';
 import { notFoundHandler } from '@/middlewares/notFoundHandler';
 import { errorHandler } from '@/middlewares/errorHandler';
 import { validate } from '@/middlewares/validate';
+import { trimHandler } from './middlewares/trimHandler';
 
 const app = express();
 const port = process.env['PORT'] || 3000;
@@ -28,6 +29,7 @@ app.use(
 // --- Body Parsers ---
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
+app.use(trimHandler);
 
 // --- Request Logger (log setiap HTTP request) ---
 app.use(requestLogger);
