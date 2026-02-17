@@ -12,7 +12,6 @@ Backend application untuk Shiftku - Sistem manajemen shift karyawan yang powerfu
 - [Running the Application](#-running-the-application)
 - [Available Scripts](#-available-scripts)
 - [Project Structure](#-project-structure)
-- [Documentation](#-documentation)
 
 ## 🛠 Tech Stack
 
@@ -170,10 +169,6 @@ npm start
 
 ```
 shiftku-backend/
-├── docs/                       # Dokumentasi
-│   ├── ARCHITECTURE_GUIDE.md   # Panduan arsitektur
-│   ├── ERD.md                  # Entity Relationship Diagram
-│   └── PRISMA_V7_GUIDE.md      # Guide Prisma v7
 ├── prisma/                     # Prisma configuration
 │   ├── schema/                 # Prisma schemas (modular)
 │   │   ├── auth/               # Authentication models
@@ -200,14 +195,6 @@ shiftku-backend/
 └── tsconfig.json               # TypeScript configuration
 ```
 
-## 📚 Documentation
-
-Dokumentasi tambahan tersedia di folder `docs/`:
-
-- [Architecture Guide](docs/ARCHITECTURE_GUIDE.md) - Panduan arsitektur aplikasi
-- [ERD](docs/ERD.md) - Entity Relationship Diagram
-- [Prisma v7 Guide](docs/PRISMA_V7_GUIDE.md) - Guide penggunaan Prisma v7
-
 ## 🤝 Contributing
 
 Contributions are welcome! Silakan buat issue atau pull request.
@@ -222,5 +209,3 @@ ISC
 - **Issues**: [Report Issues](https://github.com/AnakSehatCode/shiftku-backend/issues)
 
 ---
-
-Made with ❤️ by the Shiftku Team
