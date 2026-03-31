@@ -1,0 +1,20 @@
+{
+  "tenant": {
+    "created": "Tenant berhasil dibuat",
+    "updated": "Tenant berhasil diperbarui",
+    "not_found": "Tenant tidak ditemukan",
+    "slug_taken": "Slug sudah dipakai"
+  },
+  "auth": {
+    "login_success": "Login berhasil",
+    "invalid_credentials": "Email atau password salah",
+    "register_success": "Registrasi berhasil",
+    "email_taken": "Email sudah terdaftar"
+  },
+  "common": {
+    "validation_failed": "Validasi gagal",
+    "not_found": "Data tidak ditemukan",
+    "unauthorized": "Tidak memiliki akses",
+    "server_error": "Terjadi kesalahan server"
+  }
+}

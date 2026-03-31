@@ -3,12 +3,14 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import { z } from 'zod';
-import logger from '@/config/logger';
-import { requestLogger } from '@/middlewares/requestLogger';
-import { notFoundHandler } from '@/middlewares/notFoundHandler';
-import { errorHandler } from '@/middlewares/errorHandler';
-import { validate } from '@/middlewares/validate';
+import logger from './config/logger';
+import { requestLogger } from './middlewares/requestLogger';
+import { notFoundHandler } from './middlewares/notFoundHandler';
+import { errorHandler } from './middlewares/errorHandler';
+import { validate } from './middlewares/validate';
 import { trimHandler } from './middlewares/trimHandler';
+import { langMiddleware } from './middlewares/langMiddleware';
+import { t } from './i18n';
 
 const app = express();
 const port = process.env['PORT'] || 3000;
@@ -30,6 +32,7 @@ app.use(
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(trimHandler);
+app.use(langMiddleware);
 
 // --- Request Logger (log setiap HTTP request) ---
 app.use(requestLogger);
@@ -51,6 +54,17 @@ const testSchema = z.object({
 });
 app.post('/test-validate', validate(testSchema), (req, res) => {
   res.json({ success: true, data: req.body });
+});
+app.get('/test-i18n', (req, res) => {
+  res.json({
+    success: true,
+    message: t('common.not_found', req.lang),
+    data: null,
+  });
+  // res.json({
+  //   lang: req.lang,
+  //   message: t('common.not_found', req.lang),
+  // });
 });
 // ==========================================
 

@@ -1,0 +1,20 @@
+{
+  "tenant": {
+    "created": "Tenant created successfully",
+    "updated": "Tenant updated successfully",
+    "not_found": "Tenant not found",
+    "slug_taken": "Slug is already taken"
+  },
+  "auth": {
+    "login_success": "Login successful",
+    "invalid_credentials": "Invalid email or password",
+    "register_success": "Registration successful",
+    "email_taken": "Email is already registered"
+  },
+  "common": {
+    "validation_failed": "Validation failed",
+    "not_found": "Data not found",
+    "unauthorized": "Unauthorized access",
+    "server_error": "Internal server error"
+  }
+}
