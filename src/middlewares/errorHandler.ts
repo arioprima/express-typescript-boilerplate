@@ -19,7 +19,7 @@ export function errorHandler(
       message: issue.message,
     }));
 
-    res.status(400).json({
+    res.status(422).json({
       success: false,
       message: 'Validasi gagal',
       errors,
