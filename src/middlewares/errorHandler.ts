@@ -2,10 +2,11 @@ import { Request, Response, NextFunction } from 'express';
 import { ZodError } from 'zod';
 import { AppError } from '@/utils/AppError';
 import logger from '@/config/logger';
+import { t } from '@/i18n';
 
 export function errorHandler(
   err: Error,
-  _req: Request,
+  req: Request,
   res: Response,
   _next: NextFunction
 ) {
@@ -21,7 +22,7 @@ export function errorHandler(
 
     res.status(422).json({
       success: false,
-      message: 'Validasi gagal',
+      message: t('common.validation_failed', req.lang),
       errors,
     });
     return;
@@ -41,7 +42,7 @@ export function errorHandler(
 
   res.status(500).json({
     success: false,
-    message: 'Internal Server Error',
+    message: t('common.server_error', req.lang),
     ...(process.env['NODE_ENV'] === 'development' && { stack: err.stack }),
   });
 }

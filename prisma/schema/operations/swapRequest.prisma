@@ -1,18 +1,25 @@
+enum SwapRequestStatus {
+    PENDING
+    ACCEPTED
+    REJECTED
+    CANCELLED
+}
+
 model SwapRequest {
-    id                    String    @id @default(uuid())
+    id                    String            @id @default(uuid())
     tenant_id             String
     requester_id          String
     requester_schedule_id String
     target_id             String
     target_schedule_id    String?
     reason                String?
-    status                String    @default("pending")
+    status                SwapRequestStatus @default(PENDING)
     responded_at          DateTime?
     approved_by           String?
     approved_at           DateTime?
     rejection_reason      String?
-    created_at            DateTime  @default(now())
-    updated_at            DateTime  @updatedAt
+    created_at            DateTime          @default(now())
+    updated_at            DateTime          @updatedAt
     deleted_at            DateTime?
 
     tenant             Tenant    @relation(fields: [tenant_id], references: [id], onDelete: Cascade)

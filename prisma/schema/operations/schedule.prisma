@@ -1,17 +1,24 @@
+enum ScheduleStatus {
+    SCHEDULED
+    CONFIRMED
+    CANCELLED
+    COMPLETED
+}
+
 model Schedule {
-    id           String    @id @default(uuid())
+    id           String         @id @default(uuid())
     tenant_id    String
     outlet_id    String
     user_id      String
     shift_id     String
-    date         DateTime  @db.Date
+    date         DateTime       @db.Date
     notes        String?
-    status       String    @default("scheduled")
-    published    Boolean   @default(false)
+    status       ScheduleStatus @default(SCHEDULED)
+    published    Boolean        @default(false)
     published_at DateTime?
     created_by   String?
-    created_at   DateTime  @default(now())
-    updated_at   DateTime  @updatedAt
+    created_at   DateTime       @default(now())
+    updated_at   DateTime       @updatedAt
     deleted_at   DateTime?
 
     tenant                          Tenant        @relation(fields: [tenant_id], references: [id], onDelete: Cascade)
