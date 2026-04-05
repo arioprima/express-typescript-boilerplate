@@ -1,6 +1,6 @@
-# Shiftku Backend
+# Express TypeScript Boilerplate
 
-Backend application untuk Shiftku - Sistem manajemen shift karyawan yang powerful dan user-friendly.
+A minimal and production-ready Express.js boilerplate with TypeScript.
 
 ## 📋 Daftar Isi
 
@@ -37,8 +37,8 @@ Pastikan Anda telah menginstall:
 1. **Clone repository**
 
 ```bash
-git clone https://github.com/AnakSehatCode/shiftku-backend.git
-cd shiftku-backend
+git clone https://github.com/arioprima/express-typescript-boilerplate
+cd express-typescript-boilerplate
 ```
 
 2. **Install dependencies**
@@ -72,7 +72,7 @@ NODE_ENV=development
 JWT_SECRET=your_jwt_secret_key_here
 
 # DATABASE
-DATABASE_URL="postgresql://username:password@localhost:5432/db_shiftku?schema=public"
+DATABASE_URL="postgresql://username:password@localhost:5432/express-typescript-boilerplate?schema=public"
 ```
 
 ### Penjelasan Environment Variables:
