@@ -2,15 +2,13 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import { z } from 'zod';
 import logger from './config/logger';
+import prisma from './config/database';
 import { requestLogger } from './middlewares/requestLogger';
 import { notFoundHandler } from './middlewares/notFoundHandler';
 import { errorHandler } from './middlewares/errorHandler';
-import { validate } from './middlewares/validate';
 import { trimHandler } from './middlewares/trimHandler';
 import { langMiddleware } from './middlewares/langMiddleware';
-import { t } from './i18n';
 
 const app = express();
 const port = process.env['PORT'] || 3000;
@@ -37,36 +35,15 @@ app.use(langMiddleware);
 // --- Request Logger (log setiap HTTP request) ---
 app.use(requestLogger);
 
+// --- Health Check (untuk load balancer / docker) ---
+app.get('/health', (_, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
 // --- Routes ---
 app.get('/', (_, res) => {
   res.json({ success: true, message: 'ShiftKu API is running 🚀' });
 });
-
-// ==========================================
-// TEST ROUTE — hapus nanti setelah paham
-// ==========================================
-const testSchema = z.object({
-  body: z.object({
-    email: z.email('Email tidak valid'),
-    password: z.string().min(8, 'Password minimal 8 karakter'),
-    full_name: z.string().min(1, 'Nama wajib diisi'),
-  }),
-});
-app.post('/test-validate', validate(testSchema), (req, res) => {
-  res.json({ success: true, data: req.body });
-});
-app.get('/test-i18n', (req, res) => {
-  res.json({
-    success: true,
-    message: t('common.not_found', req.lang),
-    data: null,
-  });
-  // res.json({
-  //   lang: req.lang,
-  //   message: t('common.not_found', req.lang),
-  // });
-});
-// ==========================================
 
 // TODO: Tambahkan routes di sini
 // app.use('/api/v1/auth', authRoutes);
@@ -76,7 +53,21 @@ app.use(notFoundHandler);
 app.use(errorHandler);
 
 // --- Start Server ---
-app.listen(port, () => {
+const server = app.listen(port, () => {
   logger.info(`🚀 Server is running at http://localhost:${port}`);
   logger.info(`📦 Environment: ${process.env['NODE_ENV'] || 'development'}`);
 });
+
+// --- Graceful Shutdown ---
+const shutdown = async (signal: string) => {
+  logger.info(`${signal} received. Shutting down gracefully...`);
+  server.close(() => {
+    logger.info('HTTP server closed');
+  });
+  await prisma.$disconnect();
+  logger.info('Database connection closed');
+  process.exit(0);
+};
+
+process.on('SIGINT', () => shutdown('SIGINT'));
+process.on('SIGTERM', () => shutdown('SIGTERM'));

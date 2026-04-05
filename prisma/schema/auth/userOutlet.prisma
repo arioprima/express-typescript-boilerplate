@@ -10,7 +10,6 @@ model UserOutlet {
     user   User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
     outlet Outlet @relation(fields: [outlet_id], references: [id], onDelete: Cascade)
 
-    // @@index([user_id, outlet_id], name: "user_outlet_unique_index")
-    @@index([user_id, outlet_id])
+    @@unique([user_id, outlet_id])
     @@map("user_outlets")
 }

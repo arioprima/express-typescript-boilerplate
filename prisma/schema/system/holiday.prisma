@@ -10,7 +10,7 @@ model Holiday {
 
     tenant Tenant? @relation(fields: [tenant_id], references: [id], onDelete: Cascade)
 
+    @@unique([date, tenant_id])
     @@index([is_national])
-    @@index([date])
     @@map("holidays")
 }

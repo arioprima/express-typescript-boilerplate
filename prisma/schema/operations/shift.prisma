@@ -3,8 +3,8 @@ model Shift {
     tenant_id              String
     name                   String
     color                  String?
-    start_time             DateTime
-    end_time               DateTime
+    start_time             String     // Format: "HH:mm" (contoh: "07:00")
+    end_time               String     // Format: "HH:mm" (contoh: "15:00")
     break_duration_minutes Int        @default(60)
     is_overnight           Boolean    @default(false)
     is_active              Boolean    @default(true)
